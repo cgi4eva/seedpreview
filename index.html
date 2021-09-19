@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html translate="no">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="google" content="notranslate"/>
+		<title>PvU - Seed Preview</title>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&amp;display=swap" rel="stylesheet">
+		<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+		<link href="tailwind.pvu.min.css" rel="stylesheet">
+		<style type="text/css">
+			html {
+				font-family: "Poppins",sans-serif;
+				font-size: 16px;
+				line-height: 1.5;
+				word-spacing: 1px;
+				-ms-text-size-adjust: 100%;
+				-webkit-text-size-adjust: 100%;
+				-moz-osx-font-smoothing: grayscale;
+				-webkit-font-smoothing: antialiased;
+				box-sizing: border-box;
+			}
+			body {
+				background-color: #1a1d28;
+				color: #fff;
+				font-family: inherit;
+				line-height: inherit;
+			}
+			.item-id {
+				max-width: 100px;
+			}
+			.id {
+				font-size: .75rem;
+				color: #fff;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%,-50%);
+			}
+			.stats-box {
+				padding: 4px;
+				background: #292d3e;
+				border-radius: 2px;
+			}
+			.le {
+				border: .5px solid #fff;
+				border-radius: 2px;
+				font-size: 12px;
+				line-height: 21px;
+				color: #fff;
+				padding: 2px 3px;
+			}
+			.btn-confirm:active {
+				box-shadow: none;
+			}
+			.btn-confirm {
+				background: #71c638;
+				border: 2px solid #263f2a;
+				box-shadow: 0 2px 0 rgb(0 0 0 / 20%), inset 0 -2px 0 #47881b, inset 0 2px 0 #b5ff84;
+				border-radius: 8px;
+				color: #fff;
+				width: 96px;
+				height: 32px;
+			}
+			input[type=text] {
+				-webkit-border-radius: 0.5rem;
+				-moz-border-radius: 0.5rem;
+				border-radius: 0.5rem;
+				border: 1px solid #000;
+				background-color: #000;
+				color: #fff;
+				padding: 5px;
+			}
+			.slider {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 100%;
+				height: 3px;
+				background-image: linear-gradient(to right, red, green 80%);
+				outline: none;
+				margin-top: 2px;
+				margin-bottom: 7px;
+			}
+			.slider::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 0px;
+				height: 0px;
+				padding-top: 5px;
+				border-left: 4px solid transparent;
+				border-right: 4px solid transparent;
+				border-bottom: 12px solid white;
+			}
+			.slider::-moz-range-thumb {
+				width: 0px;
+				height: 0px;
+				padding-top: 5px;
+				border-left: 4px solid transparent;
+				border-right: 4px solid transparent;
+				border-bottom: 12px solid white;
+			}
+		</style>
+		<script type="text/javascript">
+			var le_to_pvu = 150;
+			var cost = 500;
+			var rarity_svg = [
+				'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjMwIiB2aWV3Qm94PSIwIDAgODIgMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iODEiIGhlaWdodD0iMTkiIHJ4PSI0LjUiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcikiIHN0cm9rZT0idXJsKCNwYWludDFfbGluZWFyKSIvPgo8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iODAiIGhlaWdodD0iMTgiIHJ4PSI0IiBmaWxsPSIjMTkyODI2Ii8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXIiIHgxPSI0MSIgeTE9IjAiIHgyPSI0MSIgeTI9IjIwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNFQUZGRTQiLz4KPHN0b3Agb2Zmc2V0PSIwLjQ2ODc1IiBzdG9wLWNvbG9yPSIjQkNFQ0I3Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzZDOUQ4NSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MV9saW5lYXIiIHgxPSI0MSIgeTE9IjAiIHgyPSI0MSIgeTI9IjIwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiMyMzY4MzYiLz4KPHN0b3Agb2Zmc2V0PSIwLjUzMTI1IiBzdG9wLWNvbG9yPSIjMzU3RDQzIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzFDNTUzQSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=',
+				'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjMwIiB2aWV3Qm94PSIwIDAgODIgMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iODEiIGhlaWdodD0iMTkiIHJ4PSI0LjUiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcikiIHN0cm9rZT0idXJsKCNwYWludDFfbGluZWFyKSIvPgo8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iODAiIGhlaWdodD0iMTgiIHJ4PSI0IiBmaWxsPSIjMUMyMTQ4Ii8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXIiIHgxPSI0MSIgeTE9IjAiIHgyPSI0MSIgeTI9IjIwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiM4NUNFRkYiLz4KPHN0b3Agb2Zmc2V0PSIwLjQ2ODc1IiBzdG9wLWNvbG9yPSIjNDk4RUMxIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzNDNjE4QSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MV9saW5lYXIiIHgxPSI0MSIgeTE9IjAiIHgyPSI0MSIgeTI9IjIwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiM1N0E1Q0YiLz4KPHN0b3Agb2Zmc2V0PSIwLjUzMTI1IiBzdG9wLWNvbG9yPSIjMzQ4MkMxIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzFDNEY5QSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=',
+				'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjMwIiB2aWV3Qm94PSIwIDAgODIgMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iODEiIGhlaWdodD0iMTkiIHJ4PSI0LjUiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcikiIHN0cm9rZT0idXJsKCNwYWludDFfbGluZWFyKSIvPgo8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iODAiIGhlaWdodD0iMTgiIHJ4PSI0IiBmaWxsPSIjNDMxQzIyIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXIiIHgxPSI0MSIgeTE9IjAiIHgyPSI0MSIgeTI9IjIwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRjVGNzkiLz4KPHN0b3Agb2Zmc2V0PSIwLjQ2ODc1IiBzdG9wLWNvbG9yPSIjREU0MTUzIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0IwNDI1OCIvPgo8L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MV9saW5lYXIiIHgxPSI0MSIgeTE9IjAiIHgyPSI0MSIgeTI9IjIwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGMzZFNjUiLz4KPHN0b3Agb2Zmc2V0PSIwLjUzMTI1IiBzdG9wLWNvbG9yPSIjRTA0MTUzIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0IxNDI1OCIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=',
+				'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjMwIiB2aWV3Qm94PSIwIDAgODIgMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MiIgaGVpZ2h0PSIyMCIgcng9IjUiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcikiLz4KPHJlY3QgeD0iMSIgeT0iMSIgd2lkdGg9IjgwIiBoZWlnaHQ9IjE4IiByeD0iNCIgZmlsbD0iIzQzMUU3MyIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyIiB4MT0iNDEiIHkxPSIwIiB4Mj0iNDEiIHkyPSIyMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjQjc3RUQ0Ii8+CjxzdG9wIG9mZnNldD0iMC40Njg3NSIgc3RvcC1jb2xvcj0iIzc3NEI4NSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2NTM1NjgiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K'
+			];
+			var plants = [                                                                                                                             //09/18/2021
+				{tp: 'fire',     atk: 0, eq: ['1000+x','650+x*10','650+x*10','2000'], le_tm: 48,  le_eq: ['400+x',    '440+x',    '511+x',    '800' ] }, //00
+				{tp: 'fire',     atk: 2, eq: ['300+x', '100+x*5', 'x*10-290','750' ], le_tm: 48,  le_eq: ['400+x',    '440+x',    '511+x',    '800' ] }, //01
+				{tp: 'ice',      atk: 2, eq: ['400+x', '250+x*5', 'x*10-90', '1000'], le_tm: 60,  le_eq: ['500+x',    '550+x',    '591+x',    '850' ] }, //02
+				{tp: 'electro',  atk: 0, eq: ['100+x', '55+x*2',  'x*5-195', '350' ], le_tm: 48,  le_eq: ['500+x',    '550+x',    '591+x',    '850' ] }, //03
+				{tp: 'water',    atk: 1, eq: ['200+x', '180+x*2', 'x*5-45',  '500' ], le_tm: 108, le_eq: ['950+x',    '1040+x',   '1111+x',   '1400'] }, //04
+				{tp: 'water',    atk: 2, eq: ['400+x', '380+x*2', '155+x*5', '700' ], le_tm: 108, le_eq: ['950+x',    '1040+x',   '1111+x',   '1400'] }, //05
+				{tp: 'ice',      atk: 2, eq: ['300+x', '280+x*2', '55+x*5',  '600' ], le_tm: 60,  le_eq: ['500+x',    '550+x',    '591+x',    '850' ] }, //06
+				{tp: 'fire',     atk: 0, eq: ['300+x', '280+x*2', '55+x*5',  '650' ], le_tm: 48,  le_eq: ['400+x',    '440+x',    '511+x',    '800' ] }, //07
+				{tp: 'electro',  atk: 0, eq: ['100+x', '80+x*2',  'x*5-145', '400' ], le_tm: 48,  le_eq: ['500+x',    '550+x',    '591+x',    '850' ] }, //08
+				{tp: 'wind',     atk: 2, eq: ['150+x', '100+x*2', 'x*5-145', '400' ], le_tm: 72,  le_eq: ['750+x',    '800+x',    '861+x',    '1150'] }, //09
+				{tp: 'wind',     atk: 0, eq: ['350+x', '330+x*2', '75+x*5',  '600' ], le_tm: 72,  le_eq: ['750+x',    '800+x',    '861+x',    '1150'] }, //10
+				{tp: 'parasite', atk: 2, eq: ['200+x', '180+x*2', 'x*5-70',  '500' ], le_tm: 120, le_eq: ['900+x',    '950+x',    '1011+x',   '1250'] }, //11
+				{tp: 'parasite', atk: 0, eq: ['100+x', '55+x*2',  'x*5-195', '400' ], le_tm: 120, le_eq: ['900+x',    '950+x',    '1011+x',   '1250'] }, //12
+				{tp: 'parasite', atk: 0, eq: ['100+x', '55+x*2',  'x*5-195', '350' ], le_tm: 120, le_eq: ['900+x',    '950+x',    '1011+x',   '1250'] }, //13
+				{tp: 'dark',     atk: 1, eq: ['200+x', '180+x*2', 'x*5-45',  '500' ], le_tm: 192, le_eq: ['1200+x*10','1300+x*10','1410+x*10','2500'] }, //14
+				{tp: 'electro',  atk: 2, eq: ['400+x', '380+x*2', '155+x*5', '700' ], le_tm: 48,  le_eq: ['500+x',    '550+x',    '591+x',    '850' ] }, //15
+				{tp: 'wind',     atk: 2, eq: ['300+x', '280+x*2', '55+x*5',  '600' ], le_tm: 96,  le_eq: ['900+x',    '950+x',    '1011+x',   '1250'] }, //16
+				{tp: 'fire',     atk: 0, eq: ['300+x', '280+x*2', '55+x*5',  '650' ], le_tm: 72,  le_eq: ['650+x',    '700+x',    '811+x',    '1100'] }, //17
+				{tp: 'light',    atk: 0, eq: ['100+x', '80+x*2',  'x*5-145', '400' ], le_tm: 240, le_eq: ['1200+x',   '1250+x',   '1311+x',   '1500'] }, //18
+				{tp: 'light',    atk: 2, eq: ['150+x', '100+x*2', 'x*5-145', '400' ], le_tm: 240, le_eq: ['1200+x',   '1250+x',   '1311+x',   '1500'] }, //19
+				{tp: 'light',    atk: 0, eq: ['1000+x','650+x*10','650+x*10','2000'], le_tm: 312, le_eq: ['1600+x',   '1650+x',   '1711+x',   '2000'] }, //20
+				{tp: 'light',    atk: 2, eq: ['300+x', '100+x*5', 'x*10-290','750' ], le_tm: 312, le_eq: ['1600+x',   '1650+x',   '1711+x',   '2000'] }, //21
+				{tp: 'parasite', atk: 2, eq: ['400+x', '250+x*5', 'x*10-90', '1000'], le_tm: 168, le_eq: ['1300+x',   '1350+x',   '1411+x',   '1650'] }, //22
+				{tp: 'parasite', atk: 0, eq: ['100+x', '55+x*2',  'x*5-195', '350' ], le_tm: 168, le_eq: ['1300+x',   '1350+x',   '1411+x',   '1650'] }, //23
+				{tp: 'parasite', atk: 1, eq: ['200+x', '180+x*2', 'x*5-45',  '500' ], le_tm: 168, le_eq: ['1300+x',   '1350+x',   '1411+x',   '1650'] }, //24
+				{tp: 'metal',    atk: 2, eq: ['400+x', '380+x*2', '155+x*5', '700' ], le_tm: 336, le_eq: ['3500+x*10','3700+x*10','3910+x*10','5200'] }, //25
+				{tp: 'metal',    atk: 2, eq: ['300+x', '280+x*2', '55+x*5',  '600' ], le_tm: 336, le_eq: ['3500+x*10','3700+x*10','3910+x*10','5200'] }, //26
+				{tp: 'metal',    atk: 0, eq: ['300+x', '280+x*2', '55+x*5',  '650' ], le_tm: 480, le_eq: ['5500+x*10','5800+x*10','5910+x*10','7100'] }, //27
+				{tp: 'metal',    atk: 0, eq: ['100+x', '80+x*2',  'x*5-145', '400' ], le_tm: 480, le_eq: ['5500+x*10','5800+x*10','5910+x*10','7100'] }, //28
+				{tp: 'ice',      atk: 2, eq: ['150+x', '100+x*2', 'x*5-145', '400' ], le_tm: 96,  le_eq: ['800+x',    '850+x',    '911+x',    '1250'] }, //29
+				{tp: 'fire',     atk: 0, eq: ['1000+x','650+x*10','650+x*10','2000'], le_tm: 72,  le_eq: ['650+x',    '700+x',    '811+x',    '1100'] }, //30
+				{tp: 'dark',     atk: 2, eq: ['300+x', '100+x*5', 'x*10-290','750' ], le_tm: 192, le_eq: ['1200+x*10','1300+x*10','1410+x*10','2500'] }, //31
+				{tp: 'electro',  atk: 2, eq: ['400+x', '250+x*5', 'x*10-90', '1000'], le_tm: 60,  le_eq: ['650+x',    '700+x',    '811+x',    '1100'] }, //32
+				{tp: 'dark',     atk: 0, eq: ['100+x', '55+x*2',  'x*5-195', '350' ], le_tm: 216, le_eq: ['1400+x*10','1500+x*10','1610+x*10','2800'] }, //33
+				{tp: 'electro',  atk: 1, eq: ['200+x', '180+x*2', 'x*5-45',  '500' ], le_tm: 60,  le_eq: ['650+x',    '700+x',    '811+x',    '1100'] }, //34
+				{tp: 'dark',     atk: 2, eq: ['400+x', '380+x*2', '155+x*5', '700' ], le_tm: 216, le_eq: ['1400+x*10','1500+x*10','1610+x*10','2800'] }, //35
+				{tp: 'water',    atk: 2, eq: ['300+x', '280+x*2', '55+x*5',  '600' ], le_tm: 108, le_eq: ['950+x',    '1040+x',   '1111+x',   '1400'] }, //36
+				{tp: 'wind',     atk: 0, eq: ['300+x', '280+x*2', '55+x*5',  '650' ], le_tm: 96,  le_eq: ['900+x',    '950+x',    '1011+x',   '1250'] }, //37
+				{tp: 'water',    atk: 0, eq: ['100+x', '80+x*2',  'x*5-145', '400' ], le_tm: 120, le_eq: ['1050+x',   '1140+x',   '1211+x',   '1500'] }, //38
+				{tp: 'water',    atk: 2, eq: ['150+x', '100+x*2', 'x*5-145', '400' ], le_tm: 120, le_eq: ['1050+x',   '1140+x',   '1211+x',   '1500'] }  //39
+			];
+			var trees = [                                                                                                                                                                                   //09/18/2021
+				{tp: 'fire',  eq: [['200','200','10000+x*100'],['200','200','8000+x*200'],['200','200','x*500-17000'],['200','200','35000']], le_tm: 48,  le_eq: ['750+x*5', '800+x*5', '855+x*5', '1500'] }, //90
+				{tp: 'light', eq: [['125','300','15000+x*100'],['125','300','9000+x*200'],['125','300','x*500-15500'],['125','300','37500']], le_tm: 240, le_eq: ['1400+x*5','1450+x*5','1495+x*5','2120'] }, //91
+				{tp: 'ice',   eq: [['150','400','10000+x*50' ],['150','400','7500+x*100'],['150','400','x*500-27000'],['150','400','25000']], le_tm: 96,  le_eq: ['1050+x*5','1100+x*5','1155+x*5','1800'] }, //92
+				{tp: 'dark',  eq: [['400','100','7500+x*50'  ],['400','100','5000+x*100'],['400','100','x*500-29500'],['400','100','25000']], le_tm: 216, le_eq: ['2600+x*5','2650+x*5','2705+x*5','3300'] }  //93
+			];
+			var le_minmax = {plants_min: 5, plants_max: 18.33, trees_min: 5.83, trees_max: 31.25}; //09/18/2021
+			function LookUp() {
+				var code = document.getElementById('lookup').value.match(/(\d)\d{2}(\d{2})(?<=\d(\d))(\d)(\d{2})(\d+)/);
+				if(code) {
+					var x = +code[5];
+					var r = x < 60 ? 0 : x < 89 ? 1 : x < 99 ? 2 : 3;
+					document.getElementById('id').innerHTML = code[0];
+					document.getElementById('rarity').src = rarity_svg[r];
+					if(code[1] == 2) {
+						var e = code[3] % trees.length;
+						var le = eval(trees[e].le_eq[r]);
+						var le_ph = +(le / trees[e].le_tm).toFixed(2);
+						document.getElementById('type').src = 'types/' + trees[e].tp + '.svg';
+						for(var i = 0; i < 3; i++)
+							document.getElementById('atr' + i).innerHTML = eval(trees[e].eq[r][i]);
+						document.getElementById('img').src = 'pvu/' + (90 + e) + '_' + (code[4] < 1 ? 1 : code[4] > 3 ? 3 : code[4]) + '.png';
+						document.getElementById('le').innerHTML = le;
+						document.getElementById('le_tm').innerHTML = trees[e].le_tm;
+						document.getElementById('le_ph').innerHTML = le_ph;
+						document.getElementById('pvu_pm').innerHTML = Math.floor((le_ph * 720 - cost) / le_to_pvu);
+						document.getElementById('aval').value = ((le_ph - le_minmax.trees_min) * 100) / (le_minmax.trees_max - le_minmax.trees_min);
+						document.getElementById('plant').style.display = 'none';
+						document.getElementById('tree').style.display = 'flex';
+					} else {
+						var e = code[2] % plants.length;
+						var le = eval(plants[e].le_eq[r]);
+						var le_ph = +(le / plants[e].le_tm).toFixed(2);
+						document.getElementById('type').src = 'types/' + plants[e].tp + '.svg';
+						for(var i = 0; i < 4; i++)
+							document.getElementById('atk' + i).innerHTML = plants[e].atk == i ? +(eval(plants[e].eq[r]) / (i == 1 || i == 3 ? 1000 : 1)).toFixed(3) : 0;
+						document.getElementById('img').src = 'pvu/' + e + '_' + (code[4] < 1 ? 1 : code[4] > 3 ? 3 : code[4]) + '.png';
+						document.getElementById('le').innerHTML = le;
+						document.getElementById('le_tm').innerHTML = plants[e].le_tm;
+						document.getElementById('le_ph').innerHTML = le_ph;
+						document.getElementById('pvu_pm').innerHTML = Math.floor((le_ph * 720 - cost) / le_to_pvu);
+						document.getElementById('aval').value = ((le_ph - le_minmax.plants_min) * 100) / (le_minmax.plants_max - le_minmax.plants_min);
+						document.getElementById('tree').style.display = 'none';
+						document.getElementById('plant').style.display = 'flex';
+					}
+					location.hash = code[0];
+				} else alert('Invalid code!');
+			}
+			function QueryCheck() {
+				if(location.hash) {
+					document.getElementById('lookup').value = location.hash.substr(1);
+					LookUp();
+				}
+			}
+		</script>
+	</head>
+	<body onload="QueryCheck()">
+		<div class="flex h-screen">
+		<div class="tw-grid tw-grid-rows-2 tw-gap-2 m-auto">
+		<div class="tw-w-80 tw-rounded-lg tw-bg-black tw-bg-opacity-10 tw-border tw-border-gray-900">
+			<div class="tw-flex tw-gap-2 tw-p-2">
+				<input class="w-full" type="text" id="lookup" name="LookUp" value="2009039914">
+				<button class="m-auto btn-confirm" onclick="LookUp()">Look Up</button>
+			</div>
+		</div>
+		<div class="relative hover:tw-bg-gray-800 hover:tw-border-gray-300 tw-w-80 tw-h-80 tw-rounded-lg tw-bg-black tw-bg-opacity-10 tw-border tw-border-gray-900">
+			<div class="absolute inset-0 z-10 tw-flex tw-justify-center tw-items-center">
+				<img src="pvu/90_3.png" class="h-1/2 tw-mt-3 tw-mr-3" id="img">
+			</div>
+			<div class="tw-flex tw-flex-col tw-gap-2 tw-h-full tw-p-2">
+				<div class="tw-flex tw-justify-between tw-justify-start">
+					<div>
+						<div class="tw-relative tw-mb-2 item-id tw-w-24 tw-h-6">
+							<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjMwIiB2aWV3Qm94PSIwIDAgODIgMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MiIgaGVpZ2h0PSIyMCIgcng9IjUiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcikiLz4KPHJlY3QgeD0iMSIgeT0iMSIgd2lkdGg9IjgwIiBoZWlnaHQ9IjE4IiByeD0iNCIgZmlsbD0iIzQzMUU3MyIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyIiB4MT0iNDEiIHkxPSIwIiB4Mj0iNDEiIHkyPSIyMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjQjc3RUQ0Ii8+CjxzdG9wIG9mZnNldD0iMC40Njg3NSIgc3RvcC1jb2xvcj0iIzc3NEI4NSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2NTM1NjgiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K" id="rarity">
+							<p class="id" id="id">2009039914</p>
+						</div>
+						<img src="types/fire.svg" class="tw-mt-2" id="type">
+					</div>
+					<div>
+						<ul class="tw-flex tw-flex-wrap tw-flex-col tw-space-y-1" id="tree">
+							<li class="tw-flex">
+								<div class="stats-box">
+									<img src="stats/tree_atk.svg" alt="attack">
+								</div>
+								<p class="tw-text-white tw-ml-1 mt-auto" id="atr0">200</p>
+							</li>
+							<li class="tw-flex">
+								<div class="stats-box">
+									<img src="stats/tree_def.svg" alt="defense">
+								</div>
+								<p class="tw-text-white tw-ml-1 mt-auto" id="atr1">200</p>
+							</li>
+							<li class="tw-flex">
+								<div class="stats-box">
+									<img src="stats/tree_hp.svg" alt="hp">
+								</div>
+								<p class="tw-text-white tw-ml-1 mt-auto" id="atr2">35000</p>
+							</li>
+						</ul>
+						<ul class="tw-flex tw-flex-wrap tw-flex-col tw-space-y-1 tw-hidden" id="plant">
+							<li class="tw-flex">
+								<div class="stats-box">
+									<img src="stats/physic.svg" alt="physic">
+								</div>
+								<p class="tw-text-white tw-ml-1 mt-auto" id="atk0">0</p>
+							</li>
+							<li class="tw-flex">
+								<div class="stats-box">
+									<img src="stats/hp.svg" alt="hp">
+								</div>
+								<p class="tw-text-white tw-ml-1 mt-auto" id="atk1">0</p>
+							</li>
+							<li class="tw-flex">
+								<div class="stats-box">
+									<img src="stats/magic.svg" alt="magic">
+								</div>
+								<p class="tw-text-white tw-ml-1 mt-auto" id="atk2">0</p>
+							</li>
+							<li class="tw-flex">
+								<div class="stats-box">
+									<img src="stats/pure.svg" alt="pure">
+								</div>
+								<p class="tw-text-white tw-ml-1 mt-auto" id="atk3">0</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="tw-flex-grow tw-flex tw-justify-between tw-items-end">
+					<div class="le tw-text-center"> LE: <span id="le">1500</span>/<span id="le_tm">48</span> Hour </div>
+					<div class="le tw-text-center"> <span id="le_ph">31.25</span> LE/Hour </div>
+					<div class="le tw-text-center"> <span id="pvu_pm">146</span> PVU/Mth </div>
+				</div>
+				<div class="tw-flex tw-justify-center">
+					<input type="range" id="aval" class="slider" min="1" max="100" value="100" readonly="1" disabled/>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+	</body>
+</html>
